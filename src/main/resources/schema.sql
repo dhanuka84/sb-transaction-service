@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS transaction;
+
+CREATE TABLE transaction (
+  id INT AUTO_INCREMENT  PRIMARY KEY,
+  version int NOT NULL,
+  time TIMESTAMP NOT NULL,
+  amount DECIMAL NOT NULL,
+  txStatus VARCHAR(250) NOT NULL
+);
