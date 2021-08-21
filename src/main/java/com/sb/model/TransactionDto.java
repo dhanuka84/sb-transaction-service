@@ -1,19 +1,17 @@
 package com.sb.model;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+
+import javax.validation.constraints.Null;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
-
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
