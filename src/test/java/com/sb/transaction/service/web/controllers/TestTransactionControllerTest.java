@@ -1,6 +1,7 @@
 package com.sb.transaction.service.web.controllers;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -17,9 +18,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,11 +77,9 @@ class TestTransactionControllerTest {
 		System.out.print(req);
 
 		given(transactionService.doTransaction(tx)).willReturn(null);
-		mockMvc.perform(post(API_ROOT + "transactions").content(req).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent())
-				.andExpect(content().string(containsString("")));
-
-
+		MvcResult result = mockMvc.perform(post(API_ROOT + "transactions").content(req).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
+				.andExpect(content().string(containsString(""))).andReturn();
 	}
 
 	@Test
@@ -92,8 +93,22 @@ class TestTransactionControllerTest {
 		mockMvc.perform(post(API_ROOT + "transactions").content(req).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
 				.andExpect(content().string(containsString("")));
+		
 
 	}
+	
+	  @Test
+	  void whenInputIsInvalid_thenReturnsStatus400WithErrorObject() throws Exception {
+
+	    MvcResult result = mockMvc.perform(post(API_ROOT + "transactions")
+	            .contentType("application/json")
+	            .content(""))
+	            .andExpect(status().isBadRequest())
+	            .andReturn();
+	    
+	    assertThat(result.getResponse().getStatus() == HttpStatus.BAD_REQUEST.value());
+	    
+	  }
 
 	private TransactionDto buildOrderDto(final OffsetDateTime offsetDT8) {
 

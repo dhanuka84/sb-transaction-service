@@ -26,7 +26,7 @@ public abstract class BaseServiceTest {
 	private static final String currentTimeStr = sdf2.format(timestamp);
 
 	@Autowired
-	TransactionService TransactionService;
+	TransactionService transactionService;
 
 	@Autowired
 	TransactionRepository transactionRepository;
