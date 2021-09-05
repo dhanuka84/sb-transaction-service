@@ -70,9 +70,11 @@
 						{
 						"trace": {
 						"trace_id": "%mdc{traceId}",
-						"span_id": "%mdc{spanId}",
+						"span_id":
+						"%mdc{spanId}",
 						"parent_span_id": "%mdc{parentId}",
-						"exportable": "%mdc{sampled}"
+						"exportable":
+						"%mdc{sampled}"
 						}
 						}
 					</pattern>

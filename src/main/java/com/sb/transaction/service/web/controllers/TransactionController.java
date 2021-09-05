@@ -1,5 +1,7 @@
 package com.sb.transaction.service.web.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,6 @@ import com.sb.transaction.service.services.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
-
 @Slf4j
 @RequestMapping("/sb/")
 @RestController
@@ -34,9 +35,9 @@ public class TransactionController {
 
 	@PostMapping("transactions")
 	@ResponseStatus(HttpStatus.CREATED)
-	 public @ResponseBody String doTransaction(@Valid @RequestBody final TransactionDto transactionDto) {
-		
-		transactionService.doTransaction(transactionDto);		
+	public @ResponseBody String doTransaction(@Valid @RequestBody final TransactionDto transactionDto) {
+
+		transactionService.doTransaction(transactionDto);
 		return StringUtils.EMPTY;
 
 	}
@@ -44,7 +45,7 @@ public class TransactionController {
 	@GetMapping("statistics")
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody StatisticsDto statistics() {
-		return transactionService.statistics();
+		return transactionService.statistics().get();
 	}
 
 	@DeleteMapping("transactions")

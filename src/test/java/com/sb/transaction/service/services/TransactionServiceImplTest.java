@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
@@ -56,9 +57,9 @@ class TransactionServiceImplTest extends BaseServiceTest {
 	@Transactional
 	@Test
 	void getStatistics() {
-		StatisticsDto dto = transactionService.statistics();
+		Optional<StatisticsDto> dto = transactionService.statistics();
 
-		assertThat(dto.getCount()).isEqualTo(3);
+		assertThat(dto.get().getCount()).isEqualTo(3);
 	}
 
 	@Transactional

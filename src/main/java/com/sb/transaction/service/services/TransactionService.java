@@ -1,5 +1,7 @@
 package com.sb.transaction.service.services;
 
+import java.util.Optional;
+
 import org.springframework.validation.annotation.Validated;
 
 import com.sb.model.StatisticsDto;
@@ -10,7 +12,7 @@ public interface TransactionService {
 
 	TransactionDto doTransaction(final TransactionDto TransactionDto);
 
-	StatisticsDto statistics();
+	Optional<StatisticsDto> statistics();
 
 	void deleteTransactions();
 }

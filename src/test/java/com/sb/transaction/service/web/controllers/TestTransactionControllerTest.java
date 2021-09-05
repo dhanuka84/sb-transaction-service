@@ -1,7 +1,7 @@
 package com.sb.transaction.service.web.controllers;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +50,7 @@ class TestTransactionControllerTest {
 	public void getStatistics() throws Exception {
 
 		BigDecimal val1 = new BigDecimal(1.0);
-		given(transactionService.statistics()).willReturn(new StatisticsDto(val1, val1, val1, val1, 1l));
+		given(transactionService.statistics()).willReturn(Optional.of(new StatisticsDto(val1, val1, val1, val1, 1l)));
 
 		mockMvc.perform(get(API_ROOT + "statistics").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().string(containsString("")));
