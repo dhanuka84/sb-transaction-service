@@ -30,6 +30,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionDto doTransaction(final TransactionDto transactionDto) {
 	log.debug("Placing a Transaction ");
+	validateTransaction(transactionDto);
+	final Transaction tx = transactionMapper.dtoToTransaction(transactionDto);
+	tx.setId(null);
+	tx.setTxStatus(TransactionStatus.NEW);
+	transactionRepository.saveAndFlush(tx);
+	return transactionMapper.TransactionToDto(tx);
+    }
+    
+    private void validateTransaction(final TransactionDto transactionDto) {
 	final Instant now = Instant.now();
 	final Instant time = transactionDto.getTimestamp().toInstant();
 	final Duration duration = Duration.between(time, now);
@@ -41,11 +50,6 @@ public class TransactionServiceImpl implements TransactionService {
 	if (time.isAfter(Instant.now())) {
 	    throw new FutureTime("Time: " + time.toString());
 	}
-	final Transaction tx = transactionMapper.dtoToTransaction(transactionDto);
-	tx.setId(null);
-	tx.setTxStatus(TransactionStatus.NEW);
-	transactionRepository.saveAndFlush(tx);
-	return transactionMapper.TransactionToDto(tx);
     }
 
     @Override
