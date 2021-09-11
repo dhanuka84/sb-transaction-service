@@ -3,6 +3,7 @@ package com.sb.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,9 +32,11 @@ public class TransactionDto {
 
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+	@NotNull(message = "Time stamp is required")
 	private OffsetDateTime timestamp;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	@NotNull(message = "Amount is required")
 	private BigDecimal amount;
 
 	@Null
